@@ -122,7 +122,7 @@
         device-orientation-permission-ui="enabled: false">
         <a-assets>
             <video id="vid"
-                src="q.mp4"
+                src="vidv.mp4"
                 webkit-playsinline
                 playsinline
                 muted
@@ -145,7 +145,7 @@
                   <img id="icon-insta"
                 src="icons/insta-icon.png" />
                   <img id="icon-youtube"
-                src="icons/youtube-icon.png" />
+                src="icons/1.png" />
             
         </a-assets>
         <a-camera position="0 0 2"
@@ -177,35 +177,44 @@
                             height="1"
                             width="1"
                             animation="property: scale; to: 1.1 1.1 1.1; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"></a-image>
+                            <a-plane id="video-plane" material="src: #vid" position="0 0 0" height="0.552" width="1" rotation="0 0 0" class="clickable"></a-plane>
                     </a-entity>
                 </a-entity>
             </a-entity>
     </a-scene>
 
     <script>
-        // detect target found
-        const targetAr = document.querySelector('#targetAr')
-        const vidEl = document.querySelector('#vid')
+        const targetAr = document.querySelector('#targetAr');
+        const vidEl = document.querySelector('#vid');
+        const videoPlane = document.querySelector('#video-plane');
+        const youtubeBtn = document.querySelector('#youtube-button');
+    
+        // Initially hide the video plane
+        videoPlane.setAttribute('visible', false);
+    
         targetAr.addEventListener("targetFound", event => {
-            console.log("target found")
-            vidEl.play()
-      
-        })
-
-        // detect target lost
+            console.log("Target Found");
+    
+            // Wait for 2 seconds, then show the video and play it
+            setTimeout(() => {
+                videoPlane.setAttribute('visible', true);
+                vidEl.play();
+                
+                // Hide the image after 2 seconds
+                youtubeBtn.setAttribute('visible', false);
+            }, 3000);
+        });
+    
         targetAr.addEventListener("targetLost", event => {
-            console.log("target lost")
-            vidEl.pause()
-        })
-
-     
-        let youtubeBtn = document.querySelector('#youtube-button')
-
-       
-         youtubeBtn.addEventListener('click', function () {
-            window.location.href = 'https://www.youtube.com/channel/UCvvCvdrTqP1Ih9ySwRnjPVQ'
-        })
+            console.log("Target Lost");
+            vidEl.pause();
+        });
+    
+        youtubeBtn.addEventListener('click', function () {
+            window.location.href = 'https://www.youtube.com/channel/UCvvCvdrTqP1Ih9ySwRnjPVQ';
+        });
     </script>
+    
 </body>
 
 
